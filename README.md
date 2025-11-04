@@ -1,3 +1,6 @@
+# GITHUB PAGES
+<https://2jairo.github.io/react-ex2/>
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
