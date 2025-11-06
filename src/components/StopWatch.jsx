@@ -64,7 +64,7 @@ export default function Stopwatch() {
             <h1>Cronómetro</h1>
             <div className="content">
                 <div className="timer">
-                    <p>{formatNow(now, startTime)}</p>
+                    <p>{formatNow(now)}</p>
                     <p className="ms">{pad(now % 1000, 3)}</p>
                 </div>
 
@@ -90,20 +90,39 @@ export default function Stopwatch() {
             {timestamps.length > 0 && (
                 <div className="content">
                     <h2>Marcas</h2>
-                    {timestamps
-                        .map((t, i) => [t,i +1])
-                        .toReversed()
-                        .map(([t,i]) => (
-                            <div key={i} className="timestamp">
-                                <p className="idx">{i}</p>
 
-                                <div className="timer">
-                                    <p>{formatNow(t, startTime)}</p>
-                                    <p className="ms">{pad(t % 1000, 3)}</p>
-                                </div>
-                            </div>
-                        )
-                    )}
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Número</td>
+                                <td>Diferencia</td>
+                                <td>Accumulado</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {timestamps.map((t, i) => [t, i]).toReversed().map(([t, i]) => {
+                                const prev = i === 0 ? t : t - timestamps[i - 1];
+                                return (
+                                    <tr key={i}>
+                                        <td>{i + 1}</td>
+                                        <td>
+                                            <div className="timer">
+                                                <p>{formatNow(prev)}</p>
+                                                <p className="ms">{pad(prev % 1000, 3)}</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="timer">
+                                                <p>{formatNow(t)}</p>
+                                                <p className="ms">{pad(t % 1000, 3)}</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+
 
                 </div>
             )}
